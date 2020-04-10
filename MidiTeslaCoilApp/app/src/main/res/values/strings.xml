@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Midi Tesla Coil App</string>
+
+    <string name="title_connect">Connect</string>
+    <string name="title_interruptor">Interruptor</string>
+    <string name="title_midi">MIDI</string>
+
+    <string name="connect">Connect</string>
+    <string name="frequency">Frequency: </string>
+    <string name="pwm">PWM: </string>
+
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+
+</resources>
