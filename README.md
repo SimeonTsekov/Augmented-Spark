@@ -16,6 +16,8 @@ For more in-depth explanation of the physics behind the Tesla Coil, you can read
 
 Feel free to modify the code and experiment with it!
 
+Alternatively, you can just download the **app-debug.apk** file, located inside the **app/build/outputs/apk/debug** folder. 
+
 ## Project is implemented with:
 - Android Studio (Intellij-based IDE with Java SDK) for the app. 
 - Arduino UNO for receiving logic from the app and signal output to the Tesla Coil. 

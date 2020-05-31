@@ -112,24 +112,19 @@ public class EventListener implements MidiEventListener{
 
     private void initMidiPulseWidth(){
         midiPulseWidth = new HashMap<>();
-        midiPulseWidth.put(1, 78);
-        midiPulseWidth.put(2, 156);
-        midiPulseWidth.put(3, 234);
-        midiPulseWidth.put(4, 312);
-        midiPulseWidth.put(5, 390);
-        midiPulseWidth.put(6, 468);
-        midiPulseWidth.put(7, 546);
-        midiPulseWidth.put(8, 624);
-        midiPulseWidth.put(9, 702);
-        midiPulseWidth.put(10, 780);
-        midiPulseWidth.put(11, 858);
-        midiPulseWidth.put(12, 936);
-        midiPulseWidth.put(13, 1014);
-        // TODO: Add the rest of the dynamic values(note velocity) corresponding to the pulse width(1 - 65535)
+
+        for(int i = 0; i < 60; i++){
+            midiPulseWidth.put(i+1, 1000 + ((i)*20));
+        }
+
+        for(int i = 60; i <= 127; i++){
+            midiPulseWidth.put(i, 1000 + (i) * 40);
+        }
+
     }
 
     @Override
-    public void onStart(boolean fromBeginning) { // possibly do something with these after calling processor.start() and stop()
+    public void onStart(boolean fromBeginning) {
 
     }
 
@@ -137,9 +132,10 @@ public class EventListener implements MidiEventListener{
     public void onEvent(MidiEvent event, long ms) {
         if(event instanceof NoteOn){
             Integer noteValue = ((NoteOn) event).getNoteValue();
+            Integer noteVelocity = ((NoteOn) event).getVelocity();
             Integer freq = midiFrequencies.get(noteValue);
-            // TODO: send the note velocity to have dynamic.
-            bluetooth.send(freq.toString() + "d", true);
+            Integer pwm = midiPulseWidth.get(noteVelocity);
+            bluetooth.send(freq.toString() + "m" + pwm.toString() , true);
         }
     }
 

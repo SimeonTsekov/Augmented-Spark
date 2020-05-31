@@ -85,6 +85,6 @@ public class InterruptorFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        bluetoothSPP.send("0", true);
+        bluetoothSPP.send("0", true); // make sure to stop playing sound after we exit the fragment
     }
 }
