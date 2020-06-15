@@ -48,7 +48,7 @@ public class InterruptorFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 Integer freq = seekBar.getProgress() + frequencyThreshold;
-                frequency.append(freq.toString());
+                frequency.setText("Frequency: " + freq.toString());
                 bluetooth.send(freq.toString(), true);
             }
 
@@ -67,7 +67,7 @@ public class InterruptorFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Integer pwm = seekBar.getProgress() + pwmThreshold;
-                pulseWidth.append(pwm.toString());
+                pulseWidth.setText("Pulse width: " + pwm.toString());
                 bluetooth.send(pwm.toString() + "p", true);
             }
 
