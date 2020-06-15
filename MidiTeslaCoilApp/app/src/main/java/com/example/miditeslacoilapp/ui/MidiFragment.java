@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.miditeslacoilapp.BluetoothViewModel;
+import com.example.miditeslacoilapp.ViewModel.BluetoothViewModel;
 import com.example.miditeslacoilapp.R;
-import com.example.miditeslacoilapp.EventListener;
+import com.example.miditeslacoilapp.EventListeners.EventListener;
 import com.leff.midi.MidiFile;
 import com.leff.midi.event.MidiEvent;
 import com.leff.midi.util.MidiProcessor;
@@ -32,22 +32,17 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 
 public class MidiFragment extends Fragment {
     private ListView midiFiles;
-    private TextView fileLoaded;
-    private Button play;
-    private Button stop;
-    private String[] midiFilesNames;
+    private ImageButton play;
 
     private Handler handler = new Handler();
 
-    private BluetoothViewModel bluetoothViewModel;
     private BluetoothSPP bluetoothSPP;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bluetoothViewModel = ViewModelProviders.of(getActivity()).get(BluetoothViewModel.class);
+        BluetoothViewModel bluetoothViewModel = ViewModelProviders.of(getActivity()).get(BluetoothViewModel.class);
         bluetoothSPP = bluetoothViewModel.getBluetoothSPP();
     }
 
@@ -61,9 +56,7 @@ public class MidiFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         midiFiles = view.findViewById(R.id.midiSongs);
-        fileLoaded = view.findViewById(R.id.textView);
         play = view.findViewById(R.id.on);
-        stop = view.findViewById(R.id.off);
     }
 
     @Override
@@ -72,13 +65,13 @@ public class MidiFragment extends Fragment {
 
         final ArrayList<File> songs = readMidiFiles(Environment.getExternalStorageDirectory());
 
-        midiFilesNames = new String[songs.size()];
+        String[] midiFilesNames = new String[songs.size()];
 
         for(int i = 0; i < songs.size(); i++){
             midiFilesNames[i] = songs.get(i).getName().replace(".mid", "");
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.midi_file_layout, R.id.textView, midiFilesNames);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.midi_file_layout, R.id.singleMidi, midiFilesNames);
         midiFiles.setAdapter(arrayAdapter);
 
         midiFiles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,7 +84,6 @@ public class MidiFragment extends Fragment {
                 }
             }
         });
-
     }
 
 
@@ -139,19 +131,17 @@ public class MidiFragment extends Fragment {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    fileLoaded.setText("File loaded: " + file.getName());
 
                     play.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            processor.start();
-                        }
-                    });
-
-                    stop.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            processor.stop();
+                            if(!processor.isRunning()){
+                                processor.start();
+                                play.setBackground(getResources().getDrawable(R.drawable.ic_baseline_pause_24));
+                            } else {
+                                processor.stop();
+                                play.setBackground(getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24));
+                            }
                         }
                     });
                 }

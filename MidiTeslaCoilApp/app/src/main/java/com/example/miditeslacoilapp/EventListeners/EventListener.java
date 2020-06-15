@@ -1,4 +1,4 @@
-package com.example.miditeslacoilapp;
+package com.example.miditeslacoilapp.EventListeners;
 
 import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOn;

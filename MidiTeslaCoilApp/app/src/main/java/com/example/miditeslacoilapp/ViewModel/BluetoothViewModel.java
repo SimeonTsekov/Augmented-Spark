@@ -1,4 +1,4 @@
-package com.example.miditeslacoilapp;
+package com.example.miditeslacoilapp.ViewModel;
 
 import androidx.lifecycle.ViewModel;
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_connect"
+        android:checked="true"
+        android:icon="@drawable/ic_bluetooth_black_24dp"
+        android:title="@string/title_connect"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_interruptor"
+        android:checked="false"
+        android:icon="@drawable/ic_equalizer_black_24dp"
+        android:title="@string/title_interruptor"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_midi"
+        android:checked="false"
+        android:icon="@drawable/ic_audiotrack_black_24dp"
+        android:title="@string/title_midi"
+        app:showAsAction="ifRoom"/>
+
+</menu>

@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright">
+    android:background="@android:color/holo_blue_bright"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/freq"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:padding="30dp"
         android:text="@string/frequency"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="25sp"
+        android:visibility="visible"
+        android:textColor="@color/colorPrimaryDark" />
 
     <SeekBar
         android:id="@+id/freqSeekBar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
-        android:max="20000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freq" />
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:max="20000" />
 
     <TextView
         android:id="@+id/volume"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:paddingTop="150dp"
         android:text="@string/pwm"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="@+id/freq"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="@+id/freq"
-        app:layout_constraintTop_toBottomOf="@+id/freqSeekBar" />
+        android:textSize="25sp"
+        android:visibility="visible"
+        android:textColor="@color/colorPrimaryDark" />
 
     <SeekBar
         android:id="@+id/pwmSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
-        android:max="20000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freqSeekBar" />
+        android:clickable="false"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:max="20000" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
