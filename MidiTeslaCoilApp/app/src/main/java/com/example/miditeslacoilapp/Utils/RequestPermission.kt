@@ -1,16 +1,15 @@
 package com.example.miditeslacoilapp.Utils
 
+import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import com.polidea.rxandroidble2.RxBleClient
 
 private const val REQUEST_PERMISSION_BLE_SCAN = 101
 
-// Epic extension functions here
-internal fun Fragment.requestLocationPermission(client: RxBleClient) =
+internal fun Activity.requestLocationPermission(client: RxBleClient) =
         ActivityCompat.requestPermissions(
-                requireActivity(),
+                this,
                 arrayOf(client.recommendedScanRuntimePermissions[0]),
                 REQUEST_PERMISSION_BLE_SCAN
         )

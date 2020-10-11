@@ -18,16 +18,13 @@ internal class ScanResultAdapter(
     private val data = mutableListOf<ScanResult>()
 
     fun addScanResult(bleScanResult: ScanResult) {
-        // Not the best way to ensure distinct devices, just for the sake of the demo.
         data.withIndex()
                 .firstOrNull { it.value.bleDevice == bleScanResult.bleDevice }
                 ?.let {
-                    // device already in data list => update
                     data[it.index] = bleScanResult
                     notifyItemChanged(it.index)
                 }
                 ?: run {
-                    // new device => add to data list
                     with(data) {
                         add(bleScanResult)
                         sortBy { it.bleDevice.macAddress }

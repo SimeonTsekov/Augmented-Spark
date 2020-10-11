@@ -68,14 +68,14 @@ class MidiFragment : Fragment() {
         }
     }
 
-    private fun readMidiFiles(root: File): MutableList<File> {
-        val arrayList = mutableListOf<File>()
-        var files: MutableList<File>?= null
-        try {
-            val files = root.listFiles()
-        } catch (e: Exception){
+        private fun readMidiFiles(root: File): MutableList<File> {
+            val arrayList = mutableListOf<File>()
+            var files: MutableList<File>? = null
+            try {
+                val files = root.listFiles()
+            } catch (e: Exception){
             when (e) {
-                is NullPointerException -> print("RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                is NullPointerException -> print("BRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }
         }
         if (files != null) {

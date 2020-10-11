@@ -1,12 +1,9 @@
-package com.example.miditeslacoilapp.ui
+package com.example.miditeslacoilapp.activities
+
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.miditeslacoilapp.activities.DeviceActivity
 import com.example.miditeslacoilapp.BluetoothApplication
 import com.example.miditeslacoilapp.R
 import com.example.miditeslacoilapp.Utils.isLocationPermissionGranted
@@ -20,13 +17,13 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
-class ConnectionFragment : Fragment() {
+class DeviceListActivity : AppCompatActivity() {
     private val rxBleClient: RxBleClient = BluetoothApplication.rxBleClient
 
     private var scanDisposable: Disposable? = null
 
     private val resultsAdapter =
-            ScanResultAdapter { startActivity(context?.let { it1 -> DeviceActivity.newInstance(it1, it.bleDevice.macAddress) }) }
+            ScanResultAdapter { startActivity(this.let { it1 -> MainActivity.newInstance(it1, it.bleDevice.macAddress) }) } // make  newInsance of main activity.
 
     private var hasClickedScan = false
 
@@ -35,14 +32,12 @@ class ConnectionFragment : Fragment() {
 
     private lateinit var scanButton: Button
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_connection, container, false)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_device_list)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        scanButton = view.findViewById(R.id.scan_toggle_btn)
-        configureResultList(view.findViewById(R.id.scan_results))
+        scanButton = findViewById(R.id.scan_toggle_btn)
+        configureResultList(findViewById(R.id.scan_results))
         scanButton.setOnClickListener { onScanToggleClick() }
     }
 
@@ -52,12 +47,10 @@ class ConnectionFragment : Fragment() {
         adapter = resultsAdapter
     }
 
-
     private fun onScanToggleClick() {
-        if(isScanning){
+        if (isScanning) {
             scanDisposable?.dispose()
-        }
-        else {
+        } else {
             if (rxBleClient.isScanRuntimePermissionGranted) {
                 scanBleDevices()
                         .observeOn(AndroidSchedulers.mainThread())

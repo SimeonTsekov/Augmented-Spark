@@ -18,11 +18,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 
-private const val EXTRA_MAC_ADDRESS = "extra_mac_address"
+//private const val EXTRA_MAC_ADDRESS = "extra_mac_address"
 
-private const val SERVICE_UUID = "0000ffe0-0000-1000-8000-00805f9b34fb"
-private const val CHARACTERISTIC_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb"
-
+/*
 class DeviceActivity : AppCompatActivity() {
     private lateinit var connectButton: Button
     private lateinit var discoverButton: Button
@@ -48,7 +46,7 @@ class DeviceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device)
 
-        macAddress = intent.getStringExtra(EXTRA_MAC_ADDRESS)!!
+        macAddress = intent.getStringExtra(EXTRA_MAC_ADDRESS)!! // connect  automatically  after  coming  in here
 
         characteristicUuid = UUID.fromString(CHARACTERISTIC_UUID)
         bleDevice = BluetoothApplication.rxBleClient.getBleDevice(macAddress)
@@ -63,37 +61,12 @@ class DeviceActivity : AppCompatActivity() {
 
         discoverButton = findViewById(R.id.discovery)
 
-        notifyClick()
+        setupNotifications()
 
         discoverButton.setOnClickListener {
             write("1")
         }
     }
-
-    private fun prepareConnectionObservable(): Observable<RxBleConnection> =
-            bleDevice
-                    .establishConnection(false)
-                    .takeUntil(disconnectTriggerSubject)
-                    .compose(ReplayingShare.instance())
-
-    private fun onConnectToggleClick() {
-        if (bleDevice.isConnected) {
-            triggerDisconnect()
-        } else {
-            connectionObservable
-                    .flatMapSingle { it.discoverServices() }
-                    .flatMapSingle { it.getCharacteristic(characteristicUuid) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe {
-                        connectButton.text = "Connected" // TODO: extract in  resources
-                    }
-                    .doFinally { updateUI() }
-                    .subscribe()
-                    .let { connectionDisposable.add(it) }
-        }
-    }
-
-    private fun triggerDisconnect() = disconnectTriggerSubject.onNext(Unit)
 
     private fun write(data: String) {
         if (bleDevice.isConnected) {
@@ -110,20 +83,15 @@ class DeviceActivity : AppCompatActivity() {
         }
     }
 
-    private fun notifyClick() {
+    private fun setupNotifications() {
         if (bleDevice.isConnected) {
             connectionObservable
                     .flatMap { it.setupNotification(characteristicUuid) }
-                    .doOnNext { runOnUiThread { notificationHasBeenSetUp() } }
                     .flatMap { it }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe()
                     .let { connectionDisposable.add(it) }
         }
-    }
-
-    private fun notificationHasBeenSetUp() {
-        Toast.makeText(this, "LMAO NOTIFICATION", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPause() {
@@ -135,3 +103,4 @@ class DeviceActivity : AppCompatActivity() {
         connectButton.isEnabled = !bleDevice.isConnected
     }
 }
+*/
