@@ -9,13 +9,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import com.example.miditeslacoilapp.R
-import com.example.miditeslacoilapp.ViewModel.BluetoothViewModel
+import com.example.miditeslacoilapp.viewModels.BluetoothViewModel
 
 class InterruptorFragment : Fragment() {
+    private val viewModel: BluetoothViewModel by activityViewModels()
+
     companion object {
         private const val frequencyThreshold = 60
         private const val pwmThreshold = 100
@@ -36,7 +35,7 @@ class InterruptorFragment : Fragment() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val freq = seekBar.progress + frequencyThreshold
                 frequency.text = "Frequency: $freq"
-                //bluetooth.send(freq.toString(), true)
+                viewModel.writeData(freq.toString())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -47,7 +46,7 @@ class InterruptorFragment : Fragment() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val pwm = seekBar.progress + pwmThreshold
                 pulseWidth.text = "Pulse width: $pwm"
-                //bluetooth.send(pwm.toString() + "p", true)
+                viewModel.writeData(pwm.toString())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -57,6 +56,6 @@ class InterruptorFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        //bluetooth.send("0", true)
+        viewModel.onPause()
     }
 }

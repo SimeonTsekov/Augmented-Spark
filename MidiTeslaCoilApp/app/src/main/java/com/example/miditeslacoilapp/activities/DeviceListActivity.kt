@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miditeslacoilapp.BluetoothApplication
 import com.example.miditeslacoilapp.R
-import com.example.miditeslacoilapp.Utils.isLocationPermissionGranted
-import com.example.miditeslacoilapp.Utils.requestLocationPermission
+import com.example.miditeslacoilapp.Extensions.isLocationPermissionGranted
+import com.example.miditeslacoilapp.Extensions.requestLocationPermission
 import com.example.miditeslacoilapp.ui.adapters.ScanResultAdapter
 import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.scan.ScanFilter

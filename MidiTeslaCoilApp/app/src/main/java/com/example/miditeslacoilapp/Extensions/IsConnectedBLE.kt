@@ -1,4 +1,4 @@
-package com.example.miditeslacoilapp.Utils
+package com.example.miditeslacoilapp.Extensions
 
 import com.polidea.rxandroidble2.RxBleConnection
 import com.polidea.rxandroidble2.RxBleDevice

@@ -1,4 +1,4 @@
-package com.example.miditeslacoilapp.Utils
+package com.example.miditeslacoilapp.Extensions
 
 import android.app.Activity
 import android.content.pm.PackageManager

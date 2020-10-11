@@ -1,14 +1,18 @@
 package com.example.miditeslacoilapp.EventListeners
 
-import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import com.leff.midi.event.MidiEvent
 import com.leff.midi.event.NoteOn
 import com.leff.midi.util.MidiEventListener
 import java.util.*
 
-class EventListener(private val bluetooth: BluetoothSPP?) : MidiEventListener {
+class EventListener(private val onData: (data: String) -> Unit, private val onPause: () -> Unit) : MidiEventListener {
     private var midiFrequencies = mutableMapOf<Int, Int>()
     private var midiPulseWidth = mutableMapOf<Int, Int>()
+
+    init {
+        initMidiFrequencies()
+        initMidiPulseWidth()
+    }
 
     private fun initMidiFrequencies() {
         midiFrequencies = HashMap()
@@ -115,14 +119,9 @@ class EventListener(private val bluetooth: BluetoothSPP?) : MidiEventListener {
             val noteVelocity = event.velocity
             val freq = midiFrequencies[noteValue]
             val pwm = midiPulseWidth[noteVelocity]
-            bluetooth!!.send(freq.toString() + "m" + pwm.toString(), true)
+            this.onData(freq.toString() + "m" + pwm.toString())
         }
     }
 
-    override fun onStop(finished: Boolean)  = bluetooth!!.send("0", true)
-
-    init {
-        initMidiFrequencies()
-        initMidiPulseWidth()
-    }
+    override fun onStop(finished: Boolean) = this.onPause()
 }

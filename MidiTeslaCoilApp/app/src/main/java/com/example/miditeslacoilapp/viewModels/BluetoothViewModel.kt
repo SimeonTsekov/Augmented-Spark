@@ -1,18 +1,16 @@
-package com.example.miditeslacoilapp.ViewModel
+package com.example.miditeslacoilapp.viewModels
 
-import android.net.MacAddress
 import androidx.lifecycle.ViewModel
 import com.example.miditeslacoilapp.BluetoothApplication
-import com.example.miditeslacoilapp.activities.CHARACTERISTIC_UUID
-import com.example.miditeslacoilapp.activities.EXTRA_MAC_ADDRESS
+import com.example.miditeslacoilapp.Extensions.isConnected
+import com.jakewharton.rx.ReplayingShare
 import com.polidea.rxandroidble2.RxBleConnection
 import com.polidea.rxandroidble2.RxBleDevice
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import java.util.*
-
-private const val EXTRA_MAC_ADDRESS = "extra_mac_address"
 
 private const val CHARACTERISTIC_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb"
 
@@ -30,13 +28,48 @@ class BluetoothViewModel (
 
     private lateinit var characteristicUuid: UUID
 
-    private fun connect() {
+    fun connect() {
         characteristicUuid = UUID.fromString(CHARACTERISTIC_UUID)
         bleDevice = BluetoothApplication.rxBleClient.getBleDevice(macAddress)
         connectionObservable = prepareConnectionObservable()
+        setupNotifications()
+        discoverCharacteristic()
     }
 
+    private fun prepareConnectionObservable(): Observable<RxBleConnection> =
+            bleDevice
+                    .establishConnection(false)
+                    .takeUntil(disconnectTriggerSubject)
+                    .compose(ReplayingShare.instance())
 
+    private fun discoverCharacteristic() {
+        if (bleDevice.isConnected) {
+            disconnect()
+        } else {
+            connectionObservable
+                    .flatMapSingle { it.discoverServices() }
+                    .flatMapSingle { it.getCharacteristic(characteristicUuid) }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ print("Epic") }, { print("Not epic") })
+                    .let { connectionDisposable.add(it) }
+        }
+    }
+
+    private fun setupNotifications() {
+        if (bleDevice.isConnected) {
+            connectionObservable
+                    .flatMap { it.setupNotification(characteristicUuid) }
+                    .flatMap { it }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ print("Epic") }, { print("Not epic") })
+                    .let { connectionDisposable.add(it) }
+        }
+    }
+
+    fun disconnect() {
+        connectionDisposable.clear()
+        disconnectTriggerSubject.onNext(Unit)
+    }
 
     fun writeData(data: String) {
         if (bleDevice.isConnected) {
@@ -46,15 +79,15 @@ class BluetoothViewModel (
                         it.writeCharacteristic(UUID.fromString(CHARACTERISTIC_UUID), data.toByteArray())
                     }
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        Toast.makeText(this, "WROTE TEXT", Toast.LENGTH_SHORT).show()
-                    }, { print("WE DID NOT WRITE SOME EPIC SHIT BOY") })
+                    .subscribe({ print("Epic") }, { print("Not epic") })
                     .let { connectionDisposable.add(it) }
         }
     }
 
-    fun onPause() = writeData("0")
-
-
+    fun onPause() {
+        if (bleDevice.isConnected) {
+            writeData("0")
+        }
+    }
 
 }
