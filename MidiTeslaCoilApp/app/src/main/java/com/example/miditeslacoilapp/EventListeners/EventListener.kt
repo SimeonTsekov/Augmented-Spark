@@ -3,9 +3,12 @@ package com.example.miditeslacoilapp.EventListeners
 import com.leff.midi.event.MidiEvent
 import com.leff.midi.event.NoteOn
 import com.leff.midi.util.MidiEventListener
-import java.util.*
 
-class EventListener(private val onData: (data: String) -> Unit, private val onPause: () -> Unit) : MidiEventListener {
+class EventListener(
+        private val onData: (data: String) -> Unit,
+        private val onPause: () -> Unit,
+        private val onTickPassedInMS: (ticksPassed: Long) -> Unit) : MidiEventListener {
+
     private var midiFrequencies = mutableMapOf<Int, Int>()
     private var midiPulseWidth = mutableMapOf<Int, Int>()
 
@@ -15,7 +18,6 @@ class EventListener(private val onData: (data: String) -> Unit, private val onPa
     }
 
     private fun initMidiFrequencies() {
-        midiFrequencies = HashMap()
         midiFrequencies[24] = 33
         midiFrequencies[25] = 35
         midiFrequencies[26] = 37
@@ -114,14 +116,15 @@ class EventListener(private val onData: (data: String) -> Unit, private val onPa
     override fun onStart(fromBeginning: Boolean) {}
 
     override fun onEvent(event: MidiEvent, ms: Long) {
+        onTickPassedInMS(ms)
         if (event is NoteOn) {
             val noteValue = event.noteValue
             val noteVelocity = event.velocity
             val freq = midiFrequencies[noteValue]
             val pwm = midiPulseWidth[noteVelocity]
-            this.onData(freq.toString() + "m" + pwm.toString())
+            onData(freq.toString() + "m" + pwm.toString())
         }
     }
 
-    override fun onStop(finished: Boolean) = this.onPause()
+    override fun onStop(finished: Boolean) = onPause()
 }

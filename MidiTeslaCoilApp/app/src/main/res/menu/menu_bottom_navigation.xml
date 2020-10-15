@@ -12,8 +12,15 @@
     <item
         android:id="@+id/action_midi"
         android:checked="false"
+        android:icon="@drawable/ic_baseline_library_music_24"
+        android:title="@string/midi_songs"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_midi_player"
+        android:checked="false"
         android:icon="@drawable/ic_audiotrack_black_24dp"
-        android:title="@string/title_midi"
+        android:title="@string/current_song"
         app:showAsAction="ifRoom"/>
 
 </menu>

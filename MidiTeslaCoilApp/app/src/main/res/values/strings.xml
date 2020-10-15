@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">Midi Tesla Coil App</string>
 
-    <string name="title_connect">Connect</string>
-    <string name="title_interruptor">Interruptor</string>
-    <string name="title_midi">MIDI</string>
-
     <string name="frequency">Frequency: </string>
     <string name="pwm">PWM: </string>
     <string name="title_hello_bluetooth_world">G</string>
     <string name="button_start_scan">Scan for devices</string>
     <string name="button_stop_scan">Stop scanning</string>
     <string name="mac_address">address</string>
-    <string name="button_connect">connect</string>
-    <string name="button_service_discovery">discover</string>
+    <string name="search">search for devices</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="midi_songs">MIDI songs</string>
+    <string name="current_song">Current song</string>
+    <string name="title_interruptor">Interruptor</string>
 
 </resources>

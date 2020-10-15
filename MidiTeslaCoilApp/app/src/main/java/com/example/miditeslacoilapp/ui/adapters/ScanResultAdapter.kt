@@ -10,7 +10,7 @@ internal class ScanResultAdapter(
         private val onClickListener: (ScanResult) -> Unit
 ) : RecyclerView.Adapter<ScanResultAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    internal class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val device: TextView = itemView.findViewById(android.R.id.text1)
         val rssi: TextView = itemView.findViewById(android.R.id.text2)
     }

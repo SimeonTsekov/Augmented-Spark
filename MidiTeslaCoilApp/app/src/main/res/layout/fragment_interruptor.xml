@@ -1,53 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
-    android:orientation="vertical">
+    android:background="@android:color/holo_blue_bright">
 
-    <TextView
-        android:id="@+id/freq"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:gravity="center"
-        android:padding="30dp"
-        android:text="@string/frequency"
-        android:textSize="25sp"
-        android:visibility="visible"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <SeekBar
-        android:id="@+id/freqSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:max="20000" />
+        <TextView
+            android:id="@+id/freq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="@string/frequency"
+            android:textSize="25sp"
+            android:visibility="visible"
+            android:textColor="@color/colorPrimaryDark" />
 
-    <TextView
-        android:id="@+id/volume"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:gravity="center"
-        android:paddingTop="150dp"
-        android:text="@string/pwm"
-        android:textSize="25sp"
-        android:visibility="visible"
-        android:textColor="@color/colorPrimaryDark" />
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/freqSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:layout_margin="30dp"
+            android:ems="10"
+            android:max="20000" />
 
-    <SeekBar
-        android:id="@+id/pwmSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:max="20000" />
+        <TextView
+            android:id="@+id/volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:paddingTop="200dp"
+            android:text="@string/pwm"
+            android:textSize="25sp"
+            android:visibility="visible"
+            android:textColor="@color/colorPrimaryDark" />
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/pwmSeekBar"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:layout_margin="30dp"
+            android:ems="10"
+            android:max="20000" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 
-private const val CHARACTERISTIC_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb"
+private val characteristicUuid = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb")
 
 class BluetoothViewModel (
         private val macAddress: String
@@ -26,10 +26,7 @@ class BluetoothViewModel (
 
     private val connectionDisposable = CompositeDisposable()
 
-    private lateinit var characteristicUuid: UUID
-
     fun connect() {
-        characteristicUuid = UUID.fromString(CHARACTERISTIC_UUID)
         bleDevice = BluetoothApplication.rxBleClient.getBleDevice(macAddress)
         connectionObservable = prepareConnectionObservable()
         setupNotifications()
@@ -76,7 +73,7 @@ class BluetoothViewModel (
             connectionObservable
                     .firstOrError()
                     .flatMap {
-                        it.writeCharacteristic(UUID.fromString(CHARACTERISTIC_UUID), data.toByteArray())
+                        it.writeCharacteristic(characteristicUuid, data.toByteArray())
                     }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ print("Epic") }, { print("Not epic") })
