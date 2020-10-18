@@ -33,7 +33,7 @@ class MidiFilesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         midiFiles = view.findViewById(R.id.midiSongs)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Midi songs"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.midi_songs)
     }
 
     override fun onStart() {
@@ -70,6 +70,6 @@ class MidiFilesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Midi songs"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.midi_songs)
     }
 }

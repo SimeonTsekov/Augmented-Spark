@@ -11,6 +11,7 @@
     <string name="pause">Pause</string>
     <string name="play">Play</string>
     <string name="midi_songs">MIDI songs</string>
+    <string name="empty_player">No song loaded</string>
     <string name="current_song">Current song</string>
     <string name="title_interruptor">Interruptor</string>
 

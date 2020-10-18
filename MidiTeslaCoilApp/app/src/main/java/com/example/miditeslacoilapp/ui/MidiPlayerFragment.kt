@@ -2,6 +2,7 @@ package com.example.miditeslacoilapp.ui
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.miditeslacoilapp.EventListeners.EventListener
@@ -30,7 +32,7 @@ class MidiPlayerFragment : Fragment() {
 
     private lateinit var playFab: FloatingActionButton
     private lateinit var pauseFab: FloatingActionButton
-    private lateinit var songProgress: ProgressBar
+    private lateinit var songProgress: AppCompatSeekBar
 
     private var midiFileLength: Long? = null
 
@@ -53,7 +55,6 @@ class MidiPlayerFragment : Fragment() {
             }
             Thread(MidiListenerThread(it)).start()
         })
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -71,6 +72,7 @@ class MidiPlayerFragment : Fragment() {
                 return
             }
             midiFileLength = midi.lengthInTicks
+            Log.d("MIDI FILE LENGTH: ", midiFileLength.toString())
             processor = MidiProcessor(midi)
             processor!!.registerEventListener(
                     EventListener(
@@ -86,7 +88,11 @@ class MidiPlayerFragment : Fragment() {
         }
 
         private fun onTicksPassed(ticksPassed: Long) {
-            songProgress.progress = ((midiFileLength?.let { ticksPassed.div(it) })?.times(100))?.toInt() ?: 0
+            val percent: Double? = midiFileLength?.toDouble()?.let { ticksPassed.div(it) }
+            handler.post {
+                Log.d("CURRENT PROGRESS: ", percent.toString())
+                songProgress.progress = percent!!.times(100).toInt()
+            }
         }
 
         private fun start() {
@@ -108,7 +114,7 @@ class MidiPlayerFragment : Fragment() {
         val curSongName: String? = midiFileViewModel.midiFileChosen.value?.name
         val actionBar: ActionBar? = (requireActivity() as AppCompatActivity).supportActionBar
 
-        if(curSongName != null) actionBar?.title = curSongName
-        else actionBar?.title = "No song loaded"
+        if (curSongName != null) actionBar?.title = curSongName
+        else actionBar?.title = getString(R.string.empty_player)
     }
 }

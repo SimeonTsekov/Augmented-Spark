@@ -14,7 +14,7 @@ import java.util.*
 
 private val characteristicUuid = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb")
 
-class BluetoothViewModel (
+class BluetoothViewModel(
         private val macAddress: String
 ) : ViewModel() {
 
