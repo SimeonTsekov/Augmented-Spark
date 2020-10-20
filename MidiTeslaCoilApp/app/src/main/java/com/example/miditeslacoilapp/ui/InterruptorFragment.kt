@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.miditeslacoilapp.R
@@ -28,8 +30,8 @@ class InterruptorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val frequency = view.findViewById<TextView>(R.id.freq)
         val pulseWidth = view.findViewById<TextView>(R.id.volume)
-        val freqSeekBar = view.findViewById<SeekBar>(R.id.freqSeekBar)
-        val pwmSeekBar = view.findViewById<SeekBar>(R.id.pwmSeekBar)
+        val freqSeekBar = view.findViewById<AppCompatSeekBar>(R.id.freqSeekBar)
+        val pwmSeekBar = view.findViewById<AppCompatSeekBar>(R.id.pwmSeekBar)
 
         freqSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -46,7 +48,7 @@ class InterruptorFragment : Fragment() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val pwm = seekBar.progress + pwmThreshold
                 pulseWidth.text = "Pulse width: $pwm"
-                viewModel.writeData(pwm.toString())
+                viewModel.writeData(pwm.toString() + "p")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -57,5 +59,10 @@ class InterruptorFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         viewModel.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.title_interruptor)
     }
 }
